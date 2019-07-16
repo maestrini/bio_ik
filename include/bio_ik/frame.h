@@ -77,6 +77,12 @@ struct Frame
         Eigen::Quaterniond q(f.rotation());
         rot = tf2::Quaternion(q.x(), q.y(), q.z(), q.w());
     }
+    explicit inline Frame(const Eigen::Affine3d& f)
+    {
+        pos = tf2::Vector3(f.translation().x(), f.translation().y(), f.translation().z());
+        Eigen::Quaterniond q(f.rotation());
+        rot = tf2::Quaternion(q.x(), q.y(), q.z(), q.w());
+    }
 
     inline const Vector3& getPosition() const { return pos; }
     inline const Quaternion& getOrientation() const { return rot; }

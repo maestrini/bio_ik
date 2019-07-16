@@ -468,7 +468,8 @@ struct BioIKKinematicsPlugin : kinematics::KinematicsBase {
       // transform tips to baseframe
       tipFrames.clear();
       for (size_t i = 0; i < ik_poses.size(); i++) {
-        Eigen::Isometry3d p, r;
+        // Eigen::Isometry3d p, r;
+        Eigen::Affine3d p, r;
         tf::poseMsgToEigen(ik_poses[i], p);
         if (context_state) {
           r = context_state->getGlobalLinkTransform(getBaseFrame());

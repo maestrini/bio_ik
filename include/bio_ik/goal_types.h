@@ -50,6 +50,9 @@
 #include <geometric_shapes/bodies.h>
 #include <geometric_shapes/shapes.h>
 
+#define FCL_VERSION_CHECK(major, minor, patch) ((major << 16) | (minor << 8) | (patch))
+#define MOVEIT_FCL_VERSION FCL_VERSION_CHECK(FCL_MAJOR_VERSION, FCL_MINOR_VERSION, FCL_PATCH_VERSION)
+
 namespace bio_ik
 {
 
@@ -297,6 +300,7 @@ public:
     }
 };
 
+#if (MOVEIT_FCL_VERSION < FCL_VERSION_CHECK(0, 6, 0))
 class TouchGoal : public LinkGoalBase
 {
     tf2::Vector3 position;
@@ -343,6 +347,7 @@ public:
     virtual void describe(GoalContext& context) const;
     virtual double evaluate(const GoalContext& context) const;
 };
+#endif
 
 class AvoidJointLimitsGoal : public Goal
 {

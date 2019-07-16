@@ -46,6 +46,9 @@
 
 #include <bio_ik/goal.h>
 
+#define FCL_VERSION_CHECK(major, minor, patch) ((major << 16) | (minor << 8) | (patch))
+#define MOVEIT_FCL_VERSION FCL_VERSION_CHECK(FCL_MAJOR_VERSION, FCL_MINOR_VERSION, FCL_PATCH_VERSION)
+
 namespace bio_ik
 {
 
@@ -62,6 +65,7 @@ private:
     IKParams params;
     RobotInfo modelInfo;
     double dpos, drot, dtwist;
+#if (MOVEIT_FCL_VERSION < FCL_VERSION_CHECK(0, 6, 0))
     struct CollisionShape
     {
         std::vector<Vector3> vertices;
@@ -83,6 +87,7 @@ private:
         }
     };
     std::vector<CollisionLink> collision_links;
+#endif
     size_t addTipLink(const moveit::core::LinkModel* link_model);
 
 public:
